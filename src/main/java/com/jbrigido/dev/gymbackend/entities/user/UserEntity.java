@@ -1,5 +1,6 @@
 package com.jbrigido.dev.gymbackend.entities.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class UserEntity {
     @Column(length = 50, nullable = false)
     private String lastname;
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthday;
     @Column(unique = true, length = 100)
     private String email;
@@ -28,9 +30,9 @@ public class UserEntity {
     private String username;
     @Column(length = 40)
     private String password;
-    @Column(columnDefinition = "boolean default 1")
+    @Column(nullable = false,insertable = false, columnDefinition = "boolean default 1")
     private Boolean status;
-    @Column(columnDefinition = "timestamp default now()")
+    @Column(nullable = false,insertable = false, updatable = false, columnDefinition = "timestamp default now()")
     private LocalDateTime created_at;
 
 }

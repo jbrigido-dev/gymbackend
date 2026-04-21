@@ -2,9 +2,9 @@ package com.jbrigido.dev.gymbackend.services.user;
 
 import com.jbrigido.dev.gymbackend.entities.user.UserEntity;
 import com.jbrigido.dev.gymbackend.repositories.user.UserRepository;
+import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
+@Service
 public class UserServiceImplementation implements UserService {
 
     private UserRepository repository;
@@ -18,13 +18,12 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public void save(UserEntity user) {
-        Optional<UserEntity> found = repository.findByEmailOrUsername(user.getEmail(), user.getUsername());
-        if (found.isPresent()) {
-            throw new RuntimeException("Email or Username used by another user");
-        }
-
+    public void register(UserEntity user) {
         repository.save(user);
+    }
 
+    @Override
+    public boolean isAvailable(UserEntity user) {
+        return !repository.existsByEmail(user.getEmail()) && !repository.existsByUsername(user.getUsername());
     }
 }

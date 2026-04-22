@@ -4,6 +4,8 @@ import com.jbrigido.dev.gymbackend.entities.user.UserEntity;
 import com.jbrigido.dev.gymbackend.repositories.user.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImplementation implements UserService {
 
@@ -26,4 +28,15 @@ public class UserServiceImplementation implements UserService {
     public boolean isAvailable(UserEntity user) {
         return !repository.existsByEmail(user.getEmail()) && !repository.existsByUsername(user.getUsername());
     }
+
+    @Override
+    public void update(UserEntity user) {
+        repository.save(user);
+    }
+
+    @Override
+    public Optional<UserEntity> findById(Long id) {
+        return repository.findById(id);
+    }
+
 }

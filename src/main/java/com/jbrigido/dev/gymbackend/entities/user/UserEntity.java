@@ -30,9 +30,15 @@ public class UserEntity {
     private String username;
     @Column(length = 40)
     private String password;
-    @Column(nullable = false,insertable = false, columnDefinition = "boolean default 1")
+    @Column(nullable = false, insertable = false, columnDefinition = "boolean default 1")
     private Boolean status;
-    @Column(nullable = false,insertable = false, updatable = false, columnDefinition = "timestamp default now()")
+    @Column(nullable = false, insertable = false, updatable = false, columnDefinition = "timestamp default now()")
     private LocalDateTime created_at;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, insertable = false)
+    private Role role = Role.CLIENT;
 
+    enum Role {
+        ADMIN, TRAINER, CLIENT
+    }
 }

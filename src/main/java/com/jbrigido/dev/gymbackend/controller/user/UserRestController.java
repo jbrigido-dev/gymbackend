@@ -43,4 +43,42 @@ public class UserRestController {
         service.update(request);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<?> patchUpdate(@RequestBody UserEntity request, @PathVariable Long id) {
+        Optional<UserEntity> user = service.findById(id);
+        if (user.isEmpty()) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+
+        UserEntity recovered = user.get();
+
+        if (request.getName() != null) {
+            recovered.setName(request.getName());
+        }
+        if (request.getLastname() != null) {
+            recovered.setLastname(request.getLastname());
+        }
+        if (request.getEmail() != null) {
+            recovered.setEmail(request.getEmail());
+        }
+        if (request.getBirthday() != null) {
+            recovered.setBirthday(request.getBirthday());
+        }
+        if (request.getRole() != null) {
+            recovered.setRole(request.getRole());
+        }
+        if (request.getUsername() != null) {
+            recovered.setUsername(request.getUsername());
+        }
+        if (request.getPassword() != null) {
+            recovered.setPassword(request.getPassword());
+        }
+        if (request.getStatus() != null) {
+            recovered.setStatus(request.getStatus());
+        }
+        service.update(recovered);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
 }

@@ -4,6 +4,7 @@ import com.jbrigido.dev.gymbackend.entities.user.UserEntity;
 import com.jbrigido.dev.gymbackend.repositories.user.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,6 +14,11 @@ public class UserServiceImplementation implements UserService {
 
     public UserServiceImplementation(UserRepository repository) {
         this.repository = repository;
+    }
+
+    @Override
+    public List<UserEntity> getAll() {
+        return repository.findAll();
     }
 
     @Override

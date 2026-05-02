@@ -2,26 +2,29 @@ package com.jbrigido.dev.gymbackend.controller.user;
 
 import com.jbrigido.dev.gymbackend.entities.user.UserEntity;
 import com.jbrigido.dev.gymbackend.services.user.UserService;
-import com.jbrigido.dev.gymbackend.services.user.UserServiceImplementation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserRestController {
 
     private UserService service;
-
-    public UserRestController(UserServiceImplementation service) {
+    public UserRestController(UserService service) {
         this.service = service;
     }
 
     @GetMapping
-    public String greeting() {
-        return "Hello";
+    public ResponseEntity<?> getAll() {
+        List<UserEntity> list = service.getAll();
+        if (list.isEmpty()){
+            return new ResponseEntity<>("There are not client to list", HttpStatus.NOT_FOUND);
+        }
+        return  new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @PostMapping("/register")
